@@ -1,52 +1,28 @@
-import cv2
+from lib.interface import *
+from lib.analise import *
 
-# Importando o video de teste
-arquivoVideo = cv2.VideoCapture('pedestres360p60seg.mp4')
-# Importando os .xml contendo o classificador de veiculos e pedestres pré treinados
-arquivoClassificadorCarros = 'baseVeiculos.xml'
-arquivoClassificadorPedestres = 'basePedestres.xml'
+print(linha())
+print('DETECTOR DE VEÍCULOS E PEDESTRES'.center(42))
 
-# Criando o classificador que vai reconhecer veiculos e pedestres
-rastrearCarros = cv2.CascadeClassifier(arquivoClassificadorCarros)
-rastrearPedestres = cv2.CascadeClassifier(arquivoClassificadorPedestres)
-
-
-# Um loop para o programa rodar até os carros pararem
 while True:
-    # Faz a leitura de quadros no arquivoVideo retornando uma tupla com um valor booleano e um frame do video
-    (lidoComSucesso, frame) = arquivoVideo.read()
-
-    # Roda o programa se o video tiver sido lido com sucesso
-    if lidoComSucesso:
-        # Converte o frame do video para preto e branco na escala preto e branco
-        pretoBranco = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # Quebra o loop caso o vídeotena acabado
-    else:
+    resposta = menu(['Analisar Exemplos', 'Analisar Imagem', 'Analisar Vídeo', 'Como Utilizar o Programa', 'Fechar programa'])
+    if resposta == 1:
+        analisarExemplos()
+    elif resposta == 2:
+        cabecalho('Analisar Imagem')
+        leitura = str(input('Digite o nome do arquivo: '))
+        analisarImagem(leitura)
+    elif resposta == 3:
+        cabecalho('Analisar Vídeo')
+        leitura = str(input('Digite o nome do arquivo: '))
+        analisarVideo(leitura)
+    elif resposta == 4:
+        cabecalho('Como utilizar o programa')
+        comoUtilizar()
+    elif resposta == 5:
+        cabecalho('Fechando programa')
         break
-
-    # Detectando carros e pedestres com o detectMultiScale do cv2
-    # É criado um lista que armazena outra lista contendo as coordenadas dos carros/pedestres
-    carros = rastrearCarros.detectMultiScale(pretoBranco)
-    pedestres = rastrearPedestres.detectMultiScale(pretoBranco)
-
-    # Printa no terminal as coordenadas onde há carros e pedestres dentro da imagem armazenada na lista de carros/pedestres
-    # [x, y, width, height]
-    
-    # Desenhando um retangulo vermelho ao redor dos carros (2:57:00)
-    # Para cada x,y,w,h em cada indice de carros
-    for (x, y, w, h) in carros:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 225), 2)
-    
-    # Desenhando um retangulo amarelo ao redor dos pedestres (2:57:00)
-    # Para cada x,y,w,h em cada indice de pedestres
-    for (x, y, w, h) in pedestres:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 225, 225), 2)
-
-    # Criando um display para exibir o video em uma janela
-    cv2.imshow('Detector de Veiculos e Pedestres', frame)
-
-    # A função imshow durará só um frame
-    # Então com essa função o programa só irá fechar apertando alguma tecla
-    cv2.waitKey(1)
-
-print('Código executado com sucesso')
+    else:
+        print('\033[31mERRO, DIGITE UMA OPÇÃO VÁLIDA\033[m')
+# analisarImagem('packages\galeria\imagem1.jpg')
+# analisarVideo('packages\galeria\gravacao2.mp4')
