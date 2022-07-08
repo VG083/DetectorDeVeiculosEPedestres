@@ -25,7 +25,7 @@ def analisarImagem(leitura):
 
     # Printa no terminal as coordenadas onde há carros dentro da imagem armazenada na lista de carros
     # [x, y, width, height]
-    print(carros)
+    #print(carros)
 
     # Desenhando um retangulo vermelho ao redor dos carros (2:57:00)
     # Para cada x,y,w,h em cada indice de carros
