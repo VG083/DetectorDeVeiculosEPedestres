@@ -24,5 +24,3 @@ while True:
         break
     else:
         print('\033[31mERRO, DIGITE UMA OPÇÃO VÁLIDA\033[m')
-# analisarImagem('packages\galeria\imagem1.jpg')
-# analisarVideo('packages\galeria\gravacao2.mp4')
