@@ -3,6 +3,11 @@ import cv2
 from lib.interface import menu
 
 def analisarImagem(leitura):
+    '''
+    """
+    -> Essa função faz a análise de uma imagem para detectar carros
+    :param leitura: Recebe o arquivo que deve ser lido
+    '''
     # Importando a imagem de teste
     arquivoImagem = cv2.imread(leitura)
     # Importando o xml contendo o classificador de veiculos pré treinado
@@ -38,6 +43,11 @@ def analisarImagem(leitura):
 
 
 def analisarVideo(leitura):
+    '''
+    """
+    -> Essa função faz a análise de um vídeo para detectar carros e pedestres
+    :param leitura: Recebe o arquivo que deve ser lido
+    '''
     # Importando o video que será analisado
     arquivoVideo = cv2.VideoCapture(leitura)
     # Importando os .xml contendo o classificador de veiculos e pedestres pré treinados
@@ -84,12 +94,22 @@ def analisarVideo(leitura):
 
         # A função imshow durará só um frame
         # Então com essa função o programa só irá fechar apertando alguma tecla
-        cv2.waitKey(1)
+        # Se a tecla apertada for 'q' o opencv irá fechar a janela
+        key = cv2.waitKey(1)
+
+        if key==81 or key==113:
+            break
+    
+    cv2.destroyAllWindows()
 
     print('Código executado com sucesso')
 
 
 def analisarExemplos():
+    '''
+    """
+    -> Essa função faz um menu que auxilia o usuário a carregar o programa utilizando um dos arquivos presente no packages do programa
+    '''
     resposta = menu(['Analisar a primeira imagem do banco de exemplos', 'Analisar a segunda imagem do banco de exemplos', 'Analisar a terceira imagem do banco de exemplos', 'Analisar o primeiro vídeo do banco de exemplos', 'Analisar o segundo vídeo do banco de exemplos'])
     if resposta == 1:
         analisarImagem('packages\galeria\imagem1.jpg')
